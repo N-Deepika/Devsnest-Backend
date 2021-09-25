@@ -1,0 +1,20 @@
+How to make a chat app in redis:
+
+
+STEPS To Follow:-
+
+ 1: OPEN two different wsls
+ 2: Type in redis-cli to check if it is working
+ 3. Go to upstash to make a redis cli  : https://console.upstash.com/pages/
+ 4. create a redis database and connect both the sides
+ 5. copy the command which is given in the upstash website, it'll look like this: 
+  
+
+      =>redis-cli -u redis://bdff23be171a4f9ebdbe42a7ed9f1a@usc1-neutral-lynx-31383.upstash.io:31383
+  
+  
+  6. Then in first terminal run the following command to subscribe : 
+     =>SUBSCRIBE devnest 
+
+  7. And In the other one write command to publish the message:
+     =>PUBLISH devsnest message

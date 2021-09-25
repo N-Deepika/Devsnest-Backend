@@ -1,0 +1,118 @@
+POSTGRESQL QUERIES:-
+
+Query	                           		   functions
+ CREATE USER "Light" WITH PASSWORD "password";	:- Create a user with "Light" as username and "password" as password
+ CREATE DATABASE Student;                       :- Create a database with name Student
+ GRANT ALL PRIVILEGES ON DATABASE devs TO abc;	:- Grant total access to user to a database. 'ALL' can be modified with specific                                                    privileges also such as read/write etc.
+ DROP DATABASE IF EXISTS name;       		:- Deletes a database called name if it exists.
+ \list						:- Displays the list of databases.
+ \connect dbname				:- Connect to the database db_name
+ \dt						:- Displays a list of table when connected to a database.
+ \d						:- Displays a list of relations tables in the database.
+ \d database2					:- Displays a list of relations tables in the database2.
+
+
+
+
+Queries:
+
+=>
+CREATE USER devs WITH PASSSWORD 'password';
+
+=>
+CREATE DATABASE devs_db;
+
+CREATE DATABASE devs_db WITH OWNER devs;
+
+=>
+GRANT ALL PRIVILEGES ON DATABASE devs_db TO devs;
+
+=>
+ To switch user and db:
+psql -h localhost -U devs devs_db;
+
+
+=>
+CREATE TABLE COMPANY(
+id INT PRIMARY KEY NOT NULL,
+name TEXT NOT NULL,
+age INT NOT NULL,
+address VARCHAR(50),
+salary DECIMAL
+);
+
+=>
+CREATE TABLE DEPARTMENT(
+id INT PRIMARY KEY NOT NULL,
+dept CHAR[15] NOT NULL,
+emp_id INT NOT NULL
+);
+
+=> Check schems with \dn
+CREATE SCHEMA devs_schema;
+
+=>
+CREATE TABLE devs_schema.company(
+id INT NOT NULL,
+name VARCHAR[50] NOT NULL,
+age INT,
+address varchar[100],
+salary DECIMAL(18,2),
+PRIMARY KEY(id)
+);
+
+=>
+DROP SCHEMA devs_schema CASCADE;
+
+=>
+INSERT INTO company(id, name, age, address, salary) VALUES (1,'Rick',21, 'LA', 15000);
+INSERT INTO company(id, name, age, address, salary) VALUES (2,'Morty', 15, 'NYC', 25000);
+INSERT INTO company(id, name, age, address, salary) VALUES (3,'Richard', 35, 'California', 35000);
+INSERT INTO company(id, name, age, address, salary) VALUES (4,'Wilson', 22, 'SV', 135000.123);
+
+11)
+SELECT COUNT(*) FROM company;
+
+=>
+SELECT * FROM company WHERE name LIKE 'Ri%';
+SELECT * FROM company WHERE name LIKE 'RI%';
+SELECT * FROM company WHERE name ILIKE 'RI%';
+
+=>
+SELECT * FROM company WHERE age BETWEEN 15 AND 25;
+SELECT * FROM company WHERE age IN(15, 21, 35, 40);
+
+=>
+UPDATE company SET salary = 21345.00 WHERE id = 2;
+
+=>
+SELECT * FROM company ORDER BY id;
+
+=>
+DELETE FROM company WHERE id = 1;
+
+
+=>
+CREATE TABLE customers(
+cust_id INT NOT NULL,
+cust_name VARCHAR(20) NOT NULL,
+PRIMARY KEY(cust_id)
+);
+
+
+=>
+CREATE TABLE contacts(
+contact_id INT NOT NULL,
+cust_id INT,
+contact_name VARCHAR(20) NOT NULL, 
+phone VARCHAR(15), 
+email VARCHAR(20), 
+PRIMARY KEY(contact_id),
+CONSTRAINT fk_cust 
+FOREIGN KEY(cust_id) REFERENCES customers(cust_id)
+ON DELETE CASCADE
+);
+
+
+#Evaluating Clauses in the order:
+ FROM --> WHERE --> SELECT --> ORDER BY
